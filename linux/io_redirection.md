@@ -208,6 +208,13 @@ this will send all output (stdout and stderr) to find_results.txt
 [linux_lab@localhost ~]$ find / -name README > find_results.txt 2>&1
 ```
 
+another way to send both stdout and stderr to the same file is by using `&>`
+
+```
+[linux_lab@localhost ~]$ find / -name README &> find_results.txt
+```
+
+
 ## TEE
 
 **tee** is a utility that will print the output of a command to the screen and to a file at the same time
