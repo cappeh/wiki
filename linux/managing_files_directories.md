@@ -108,6 +108,7 @@ the `touch` command lets you to create empty files
 the original purpose of the `touch` command was to modify access and modification timestamps of a file
 
 you can create a single or multiple files with the touch commmand
+for creating multiple files, list out the file names seperated bu a space
 
 ```
 [linux_lab@localhost Documents]$ touch project1.txt
@@ -117,4 +118,39 @@ project1.txt
 [linux_lab@localhost Documents]$ ls
 project12.txt  project1.txt  project22.txt  project32.txt
 [linux_lab@localhost Documents]$ 
+```
+from a user perspective, a directory contains files. But the directory is a special `file used to locate other files`
+a file for which the directory is responsible has some of its metadata stored within the directory file such as the filename and inode number.
+    - a file can then be located by its managing directory
+the inode contains the actual files permissions, size, timestamps etc.
+
+the `mkdir` command will create an empty directory in the current working directory. we can use the `-v` switch to show us whether the directory has been created
+
+```
+[linux_lab@localhost Documents]$ mkdir Projects
+[linux_lab@localhost Documents]$ ls
+Projects
+
+[linux_lab@localhost Documents]$ mkdir -v Projects
+mkdir: created directory 'Projects'
+```
+to create a directory in a different location than the cwd, an absolute path can be used. a sub-directory cannot be created without a parent directory.
+the `-p` switch overwrites this and will create any non-existent directory in the path provided
+
+for example, when creating the sub-dir `something_else`, the parent directory `some_dir` does not exist,
+using the `-p` switch, some_dir is created first, followed by something else
+
+```
+[linux_lab@localhost Documents]$ mkdir -p /home/linux_lab/some_dir/something_else
+[linux_lab@localhost Documents]$ cd
+[linux_lab@localhost ~]$ ls
+Desktop  Documents  Downloads  find_results.txt  Music  Pictures  ps.txt  Public  some_dir  Templates  Videos
+[linux_lab@localhost ~]$ 
+```
+
+```
+[linux_lab@localhost Documents]$ mkdir -pv /home/linux_lab/some_dir/something_else
+mkdir: created directory '/home/linux_lab/some_dir'
+mkdir: created directory '/home/linux_lab/some_dir/something_else'
+[linux_lab@localhost Documents]$
 ```
