@@ -154,3 +154,28 @@ mkdir: created directory '/home/linux_lab/some_dir'
 mkdir: created directory '/home/linux_lab/some_dir/something_else'
 [linux_lab@localhost Documents]$
 ```
+## Copy/Move
+to copy a file or directory locally, we use the `cp` command
+
+`cp [option]... SOURCE DESTINATION`
+
+ -a | --archive | this will perform a recursive copy and maintain the files original attributes (permissions, ownership, timestamps)
+ -f | --force | overwrite any pre-existing destination file with the same name as DESTINATION
+ -i | --interactive | ask before overwriting any pre-existing file with the same name as DESTINATION
+ -n | --no-clobber | do not overwrite any pre-existing file name
+ -r, -R | --recursive | copy a directories contents and for any directory in the directory tree, copy its contents as well
+ -u | --update | only overwrite pre-existing destination files with the same name as DESTINATION, if the source file is newer
+ -v | --verbose | detailed command action information as cp is being executed
+
+```
+[linux_lab@localhost Documents]$ cp -r Projects/ Tasks
+[linux_lab@localhost Documents]$ cp -a Projects/ Programs
+[linux_lab@localhost Documents]$ ls
+Programs  Projects  Tasks
+[linux_lab@localhost Documents]$ ll
+total 0
+drwxr-xr-x. 2 linux_lab linux_lab 126 Apr  1 14:05 Programs
+drwxr-xr-x. 2 linux_lab linux_lab 126 Apr  1 14:05 Projects
+drwxr-xr-x. 2 linux_lab linux_lab 126 Apr  1 14:11 Tasks
+```
+using the `cp -a` command, we can see that the modification time remains the same, using `cp -r` the modification time is when the file/folder is copied
