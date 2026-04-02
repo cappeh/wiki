@@ -155,6 +155,7 @@ mkdir: created directory '/home/linux_lab/some_dir/something_else'
 [linux_lab@localhost Documents]$
 ```
 ## Copy/Move
+### Copy
 to copy a file or directory locally, we use the `cp` command
 
 `cp [option]... SOURCE DESTINATION`
@@ -179,3 +180,18 @@ drwxr-xr-x. 2 linux_lab linux_lab 126 Apr  1 14:05 Projects
 drwxr-xr-x. 2 linux_lab linux_lab 126 Apr  1 14:11 Tasks
 ```
 using the `cp -a` command, we can see that the modification time remains the same, using `cp -r` the modification time is when the file/folder is copied
+
+### Move
+to move or rename a file locally, we use the `rm` command
+
+`mv [option]... SOURCE DESTINATION`
+
+ -f | --force | overwrite any pre-existing destination file with the same name as DESTINATION
+ -i | --interactive | ask before overwriting any pre-existing file with the same name as DESTINATION
+ -n | --no-clobber | do not overwrite any pre-existing file name
+ -u | --update | only overwrite pre-existing destination files with the same name as DESTINATION, if the source file is newer
+ -v | --verbose | detailed command action information as cp is being executed
+
+For faster copies of large files or a large group of files, the `rsync` command should be used
+`rsync` is often used to create backups and securely copy files over the network
+`rsync` can be tunneled through OpenSSH for privacy, alternatively use the `scp` command
