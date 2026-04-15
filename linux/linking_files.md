@@ -46,3 +46,39 @@ the original file and the hard links share the same inode number
 the original and the hard link share the same data
 an original and the hardlink can exist in different directories
 an original and the hard linke must exist in the same filesystem
+
+## Soft Links
+A softlink provide a pointer to a file that may reside on another filesystem.
+they do not share the same inode number because they dont point to the same data
+
+filename#2 (inode #5678) -----------> filename#1 (inode #1234)
+
+to create a softlink we use the `ln` command with the `-s` option or `--symbolic`
+
+```
+[linux_lab@localhost Documents]$ touch originalSFile.txt
+
+[linux_lab@localhost Documents]$ ls
+originalSFile.txt
+
+[linux_lab@localhost Documents]$ ln -s originalSFile.txt softlink.txt
+
+[linux_lab@localhost Documents]$ ls -i
+838810 originalSFile.txt  838812 softlink.txt
+
+[linux_lab@localhost Documents]$ ls -og
+total 0
+-rw-r--r--. 1  0 Apr 15 07:50 originalSFile.txt
+lrwxrwxrwx. 1 17 Apr 15 07:51 softlink.txt -> originalSFile.txt
+```
+this shows that the inode number for the original file is different to the new softlink.txt file that has been created
+the `ls -og` command also shows the pointer from softlink.txt to originalSFile.txt
+the link count does also **not** increase like it does for hard links
+
+### Things to remember
+the original file must exist before issuing the `ln -s` command
+the second file must not exist prior to issuing the command
+an original file and its soflink file do not share the same inode number
+the original file and its softlink file do not share the same data
+the original and softlink can reside in different directories
+the original and the softlink can reside in different filesystems
