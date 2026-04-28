@@ -176,3 +176,19 @@ Apr 23 08:22:44 localhost.localdomain gnome-shell[2120]: g_object_ref: assertion
 ^C
 ```
 here at 08:22:43 I opened the network settings menu from the toolbar on a Rocky Linux VM
+
+## Pagers
+there are two common pagers `more` and `less`
+`more` is the basic of the two and allows you to move forward through a file either a line `enter key` or page at a time `spacebar`
+for both pagers, you use the `q` key to exit, taking you back to the terminal
+
+`more /etc/nsswitch.conf`
+
+`less` is faster as it does not load the entire file before displaying the first page.
+you can use the up and down arrow keys to move forwards and backwards, unlike the `more` command
+use the `ESC+V` command to move backwards a page
+
+the `?` key will allow you to search for a word within the file working backwards through the file
+the `/` key will allow you to search for a word forwards through a file
+
+`less /etc/nsswitch.conf`
