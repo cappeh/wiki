@@ -21,7 +21,7 @@ The `which` command shows the full pathname of an executable if it is located in
 [linux_lab@localhost ~]$ 
 ```
 
-the given utility passed as an argument shows the programs location on the filesystem. The which program is good to use to quickly determine
+the given utility passed as an argument shows the programs location on the filesystem. The `which` program is good to use to quickly determine
 whether a program is installed on the system
 
 the which command uses the `PATH` environment variable which contains all the directories the which program will search through
@@ -56,3 +56,65 @@ if the file you are locating is on your system and you have permission to view i
 [linux_lab@localhost ~]$ locate ps_out_original.txt 
 /home/linux_lab/ps_out_original.txt
 ```
+file globbing is used by default using wildcards such as `*` or `?` which can expand a filename in to multiple names
+such as `passw*d` could be expanded in to 'password' or 'passwrd'
+
+if no wildcards are included in the PATTERN, `locate` by default will add wildcards to the pattern
+so `passwd` would become `*passwd*`
+to search for the basename `passwd` you would need to enclose the pattern in quotation marks ('' / "") and precede the patter with \
+
+```
+[linux_lab@localhost ~]$ locate -b passwd
+/etc/passwd
+/etc/passwd-
+/etc/pam.d/passwd
+/etc/security/opasswd
+/usr/bin/gpasswd
+/usr/bin/grub2-mkpasswd-pbkdf2
+/usr/bin/passwd
+/usr/sbin/chgpasswd
+/usr/sbin/chpasswd
+/usr/sbin/lpasswd
+/usr/sbin/saslpasswd2
+/usr/share/awk/ns_passwd.awk
+/usr/share/awk/passwd.awk
+/usr/share/bash-completion/completions/smbpasswd
+/usr/share/doc/passwd
+/usr/share/doc/perl-Net-SSLeay/examples/passwd-cb.pl
+/usr/share/licenses/passwd
+/usr/share/locale/ar/LC_MESSAGES/passwd.mo
+/usr/share/man/cs/man1/gpasswd.1.gz
+/usr/share/man/de/man1/gpasswd.1.gz
+[...]
+
+[linux_lab@localhost ~]$ locate -bc passwd
+128
+```
+with file globbing, the `locate` command finds 128 files. (the output has been reduced as it will be too long)
+the `-b` option finds files that match only the basename, dont show files where the pattern matches a directory name
+the `-c` option displays a count of how many files where found instead of printing out the files line by line
+
+```
+[linux_lab@localhost ~]$ locate -b '\passwd'
+/etc/passwd
+/etc/pam.d/passwd
+/usr/bin/passwd
+/usr/share/bash-completion/completions/passwd
+/usr/share/doc/passwd
+/usr/share/licenses/passwd
+
+[linux_lab@localhost ~]$ locate -bc '\passwd'
+6
+```
+with file globbing turned off, only 6 files are found
+
+if you do not have permission to view the contents of a directory, then the `locate` command will not display those files that match the patterm
+so some files may be missing from the output
+
+the PATTERN is a list, so you can also add additional PATTERNS seperated by a space
+
+`locate -b '\passwd' '\group'`
+
+another issue that can appear, is searching for newly created or downloaded files, `locate` only searches the `mlocate.db` database not the entire virtual directory.
+this database is typically updated once a day via a cron job, therefore if its newly created, `locate` wont find it
+we can update this using the `updatedb` utility with `sudo` privileges. It can take a while to run
