@@ -209,6 +209,7 @@ this will send all output (stdout and stderr) to find_results.txt
 ```
 
 another way to send both stdout and stderr to the same file is by using `&>`
+this is only available for `bash` and `zsh` as shorthand. the POSIX standard is to use `2>&1`
 
 ```
 [linux_lab@localhost ~]$ find / -name README &> find_results.txt
