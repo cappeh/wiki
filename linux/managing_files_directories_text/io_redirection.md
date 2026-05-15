@@ -126,8 +126,8 @@ RESULTS.TXT
 TEMPLATES
 VIDEOS
 ```
-the **tr** command translates things. In this example the content of results.txt (ls command output) is taken as stdin for the translate command
-and will translate the contents to UPPER CASE
+the **tr** command will translate (modify), squeeze, and/or delete characters from standard input and write to standard output 
+In this example the content of results.txt (ls command output) is taken as stdin for the translate command and will translate the contents to UPPER CASE
 the original results.txt file is not changed, the contents are echoed to the stdout
 
 ```
