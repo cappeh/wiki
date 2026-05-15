@@ -70,3 +70,28 @@ the '|' means that the record can start with either word
 `grep -E "(daemon|s).*nologin" /etc/passwd`
 here there is a choice within the subexpression '()' of either 'daemon' or 's' and that there can be anything between the subexpression choice and the word
 'nologin' because of '.*' in the text file record
+
+The goal of the next example is to get the TTY keyboard layout from the /etc/vconsole.conf file
+
+- cat command to see the contents of the file
+- grep will search for KEYMAP at the beginning of the vconsole.conf file
+- the cut command will split the line at the delimeter '=' and select the second string '"gb"'
+- finally, tr will strip the double quotes from the string
+
+```
+[linux_lab@localhost ~]$ cat /etc/vconsole.conf 
+KEYMAP="gb"
+FONT="eurlatgr"
+
+[linux_lab@localhost ~]$ grep '^KEYMAP=' /etc/vconsole.conf | cut -d = -f 2
+"gb"
+
+[linux_lab@localhost ~]$ grep '^KEYMAP=' /etc/vconsole.conf | cut -d = -f 2 | tr -d '"'
+gb
+
+[linux_lab@localhost ~]$ lab_language=$(grep '^KEYMAP' /etc/vconsole.conf | cut -d = -f 2 | tr -d '"')
+[linux_lab@localhost ~]$ echo $lab_language
+gb
+```
+
+
