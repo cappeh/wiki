@@ -104,3 +104,56 @@ another person loves lemon donuts
 a friend loves yellow donuts
 someone else does not love donuts
 ```
+### More Complex Example
+
+#### Goal
+Modify the `MODULES=()` line in `/etc/mkinitcpio.conf` so it becomes:
+
+`MODULES=(amd radeon)`
+
+Both sed commands perform the same substitution.  
+The only difference is how the shell interprets quotes and backslashes.
+
+##### Single Quotes
+
+`s/^(MODULES=\()/\1amd radeon/`
+
+- `^` — match the beginning of the line  
+- `(MODULES=\()` — capture the literal text `MODULES=(`  
+  - The parentheses create capture group 1  
+  - The `(` must be escaped as `\(` because it's literal, not regex grouping
+
+The matched text is:
+
+`MODULES=(`
+
+`\1amd radeon`
+
+- `\1` — insert the text captured in group 1  
+- Then append `amd radeon`
+
+Result:
+
+`MODULES=(amd radeon)`
+
+##### Double Quotes
+
+- Shell interprets backslashes  
+- To pass a literal `\(` to sed, you must escape the backslash: `\\(`  
+- Same for `\1` → `\\1`
+
+
+```
+[linux_lab@localhost ~]$ cat some_file.conf 
+MODULES=()
+[linux_lab@localhost ~]$ sed -i -E 's/^(MODULES=\()/\1amd radeon/' some_file.conf
+[linux_lab@localhost ~]$ cat some_file.conf 
+MODULES=(amd radeon)
+
+[linux_lab@localhost ~]$ cat some_file.conf 
+MODULES=()
+[linux_lab@localhost ~]$ sed -i -E "s/^(MODULES=\\()/\\1amd radeon/" some_file.conf 
+[linux_lab@localhost ~]$ cat some_file.conf 
+MODULES=(amd radeon)
+
+```
