@@ -10,7 +10,7 @@ they maintain the system hardware settings and launch an installed OS
 
 BIOS has a simplistic menu interface where users could change some settings to control how the system found hardware 
 and what BIOS should use to load/start the OS
-BIOS can only load the first 512 byte sector (MBR) into memory during the initial boot stage which is not enough space to load an Operating Sytem
+BIOS can only load the first 512 byte sector (MBR - Master Boot Record) into memory during the initial boot stage which is not enough space to load an Operating Sytem
     BIOS loads this 512 byte sector from the boot device into memory and executes it
 
 the BIOS runs a `bootloader` program (a small program that initializes the necessary hardware to find and run the OS)
@@ -27,7 +27,7 @@ the BIOS must know where to find the `bootloader` on an installed storage device
 
 if using a hard drive an MBR must be present which designates where on the drive the `bootloader` is present.
 the MBR is the first sector of the disk containing a small bootloader program.
-the BIOS looks for the MBR and will read the program stored there in to memory.
+the BIOS looks for the MBR and will read the program stored there into memory.
 the MBR bootloader typically loads a secondary bootloader which will then load the Operating System kernel.
 
 ### BIOS Boot Process
