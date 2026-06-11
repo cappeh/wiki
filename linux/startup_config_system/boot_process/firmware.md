@@ -37,3 +37,33 @@ the MBR bootloader typically loads a secondary bootloader which will then load t
 3. BIOS reads the first 512 bytes of the MBR
 4. BIOS executes the bootloader/program found in the MBR
 5. the bootloader will load any additional steps to load the OS kernel
+
+## UEFI
+As systems grew more complex and BIOS became too limited, Intel introduced the Extensible Firmware Interface (EFI) in 1998. 
+This later evolved into the Unified Extensible Firmware Interface (UEFI), which is now used by most desktop and server systems.
+
+Instead of relying on a tiny boot sector at the start of a disk, UEFI uses a dedicated partition called the EFI System Partition (ESP) to store bootloader programs.
+- The ESP uses the FAT32 filesystem.
+- It can store multiple bootloaders for different operating systems.
+- Bootloaders are standard executable files with the .efi extension.
+
+On Linux systems, the ESP is typically mounted at /boot/efi, and bootloaders such as GRUB, shim, or systemd‑boot place their .efi files there.
+
+UEFI includes a built‑in boot manager that decides which bootloader to run.
+To appear in the boot menu, a bootloader’s .efi file must be registered in UEFI NVRAM.
+If it is not registered, UEFI will not list it — even if the file exists on the ESP.
+
+Most modern Operating Systems register their bootloaders automatically:
+
+Windows Registers:
+\EFI\Microsoft\Boot\bootmgfw.efi  
+Entry name: Windows Boot Manager
+
+Ubuntu / Debian / Fedora / Arch Registers:
+\EFI\ubuntu\grubx64.efi (or distro equivalent)
+Entry name: Ubuntu, Fedora, etc.
+
+For mainstream operating systems like Windows, Ubuntu, Fedora, and most Linux distros, the installer automatically creates the UEFI boot entry so it appears in the firmware’s boot menu.
+
+### Final
+Once the firmware finds and runs the `bootloader`, its job is done and the bootloader takes over.
