@@ -47,7 +47,9 @@ Instead of relying on a tiny boot sector at the start of a disk, UEFI uses a ded
 - It can store multiple bootloaders for different operating systems.
 - Bootloaders are standard executable files with the .efi extension.
 
-On Linux systems, the ESP is typically mounted at /boot/efi, and bootloaders such as GRUB, shim, or systemd‑boot place their .efi files there.
+On Linux systems, the ESP is typically mounted at /boot/efi, and bootloaders such as GRUB or systemd‑boot place their .efi files there.
+A Shim bootloader can also be used which is a UEFI executable digitally signed by a trusted authority (like Microsoft) so it can execute while Secure Boot is active. Once shim has been validated
+it then loads a second bootloader such as GRUB with the linux distros own cert chain of trust
 
 UEFI includes a built‑in boot manager that decides which bootloader to run.
 To appear in the boot menu, a bootloader’s .efi file must be registered in UEFI NVRAM.
