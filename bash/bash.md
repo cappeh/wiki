@@ -147,3 +147,75 @@ echo is /bin/echo
 `compgen -b` will list all the builtin commands
 
 ## Programs and Commands
+the `file` command will do its best to tell us what type of file something is. `file` is an external command
+`file file.txt` will likely return something such as `file.txt: ASCII text`
+
+`file /bin/rm` will return that it is a universal binary an executable program
+
+```
+file /bin/rm
+/bin/rm: Mach-O universal binary with 2 architectures: [x86_64:Mach-O 64-bit executable x86_64] [arm64e:Mach-O 64-bit executable arm64e]
+/bin/rm (for architecture x86_64):      Mach-O 64-bit executable x86_64
+/bin/rm (for architecture arm64e):      Mach-O 64-bit executable arm64e
+```
+
+PATH is where bash or other shells will look for executable programs such as `usr/bin`
+because path is a variable we need to use `$PATH` to expand the variable and print its contents to screen with the echo command
+we can also pipe it to the `tr` command to show each path on a new line as they are seperated by ':'
+
+```
+echo $PATH
+/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin
+```
+
+```
+echo $PATH | tr : '\n'
+/opt/homebrew/bin
+/opt/homebrew/sbin
+/usr/local/bin
+/System/Cryptexes/App/usr/bin
+/usr/bin
+/bin
+/usr/sbin
+/sbin
+```
+
+quotes are required because `\n` is an escape character
+
+## Basic Variables
+
+There are useful variables already provided by bash such as
+$PATH, $USER, $HOSTNAME, $SHELL, $MACHTYPE
+
+we could also create a new variable, that will live for as long as the shell session continues to exist
+`name=calum` which we can display with `echo $name`
+
+```
+foo='hello    world'
+echo $foo
+hello world
+
+echo "$foo"
+hello    world
+```
+
+when using double quotes around the variable, it will diplay the variable as intended with the multiple spaces
+**IT WILL RETAIN THE ORIGINAL DATA**
+
+`unset foo` will remove the variable once finished with the variable
+
+we can also set a variable to be the outcome of a command such as `uname -a`
+
+```
+thing=`uname -a`
+
+echo "$thing"
+Darwin CALUPRIC-M-9JJX 25.5.0 Darwin Kernel Version 25.5.0: Tue Jun  9 22:28:34 PDT 2026; root:xnu-12377.121.10~1/RELEASE_ARM64_T6041 arm64
+```
+
+using the `` is considered legacy and replaced with:
+`$(..)` for example 
+
+```
+thing=$(uname -a)
+```
