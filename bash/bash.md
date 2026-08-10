@@ -219,3 +219,6 @@ using the `` is considered legacy and replaced with:
 ```
 thing=$(uname -a)
 ```
+
+## Scripting
+a script is just a series of bash commands that are run

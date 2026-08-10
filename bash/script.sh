@@ -1,0 +1,6 @@
+name='Calum'
+number=12
+system=$(uname)
+
+echo "Hello $name (your number is: $number)"
+echo "your system is $system"
