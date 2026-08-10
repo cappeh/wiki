@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 name='Calum'
 number=12
 system=$(uname)

@@ -222,3 +222,44 @@ thing=$(uname -a)
 
 ## Scripting
 a script is just a series of bash commands that are run
+
+## File Permissions
+you can run `bash script.sh` on one of your scripts
+this is only required if the script does not have the executable bit in its permissions. use `ls -l` to see this metadata
+
+`chmod` is used to change the permissions of a script
+`chmod +x script.sh` will add the executable bit for the User, Group and Other owners
+`chmod u+x script.sh` will only add the executable permission to the User
+`chmod 755 script.sh` will set the users permission to rwx, while group and others will have r-x
+
+with the executable bit set, the file will be highlighted within the `ls -l` output to indicate its executable
+we can now run `./script.sh` instead of `bash script.sh`
+
+this works when we are currently running in bash. **run** `echo $SHELL` to show the currently running shell
+in my case currently this show `/bin/zsh` which does work
+
+we need a **SHEBANG** at the head of the script to tell it what to execute the program with
+add `#!/usr/bin/env bash` to the beginning of the script file
+it tells the system to execute the script using **Bash**
+the **shebang** also helps text editors like vim/neovim identify the scripting language so they can provide correct syntax highlighting and other language specific features
+when we have the **shebang** in the script, we dont need the `.sh` extension because the system will look inside the file and know it is a **Bash Script**
+using `.sh` was used for POSIX scripts that are not as feature packed as **bash** which could cause issues. We could also add `.bash` but this is not necessary
+
+before adding the **shebang**
+```
+file script.sh
+script.sh: ASCII text
+```
+
+after adding the **shebang**
+```
+file script.sh
+script.sh: Bourne-Again shell script text executable, ASCII text
+```
+
+when we remove the `.sh` extension with `mv`: `mv script.sh script` the system still knows this is bash script because of the **shebang**
+
+```
+file script
+script: Bourne-Again shell script text executable, ASCII text
+```
