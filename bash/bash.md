@@ -220,9 +220,6 @@ using the `` is considered legacy and replaced with:
 thing=$(uname -a)
 ```
 
-## Scripting
-a script is just a series of bash commands that are run
-
 ## File Permissions
 you can run `bash script.sh` on one of your scripts
 this is only required if the script does not have the executable bit in its permissions. use `ls -l` to see this metadata
@@ -262,4 +259,20 @@ when we remove the `.sh` extension with `mv`: `mv script.sh script` the system s
 ```
 file script
 script: Bourne-Again shell script text executable, ASCII text
+```
+
+## Scripting
+a script is just a series of bash commands that are run
+`bash -n` is a syntax checker without executing the script. Empty output means that it is successful and there are no errors
+if we use `echo $?` we can see that exit code of the last command that was run. 0 is success 1 and above means there was an error
+
+```
+for thing in foo bar baz bat; do
+    echo "thing is $thing"
+end
+```
+
+```
+bash -n loop
+loop: line 25: syntax error: unexpected end of file
 ```

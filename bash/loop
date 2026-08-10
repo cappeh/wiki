@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# basic loop in bash
+# for thing in list or array 'foo bar baz bat' is a list
+# ; do tells bash that we are opening up a loop
+# done tells bash that the loop is complete
+for thing in foo bar baz bat; do
+  echo "thing is $thing"
+done
+
+echo -e "\n##########################################################################################################\n"
+
+# '; do' is not required, it just lets us write do on the same line as the for statement
+# we could write
+for thing in foo bar baz bat
+do
+  echo "thing is $thing"
+done
+
+# this will print
+# thing is foo
+# thing is bar
+# thing is baz
+# thing is bat
