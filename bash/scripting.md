@@ -30,6 +30,8 @@ echo "hello $name"
 
 this will use the first argument given when executing the script
 so `./hello_arg calum` will print `hello calum`
+$1 is the first argument, $2 is the second, $3 is the third and so on
+$0 is the name/path used to invoke the script
 
 we can loop through arguments like this
 ```
