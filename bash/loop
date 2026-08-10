@@ -22,3 +22,14 @@ done
 # thing is bar
 # thing is baz
 # thing is bat
+
+echo -e "\n##########################################################################################################\n"
+
+# this will loop over the argurments given when executing the script. the limit here is 3, if 4 arguments are provided then it will be lost
+# for thing in "$1" "$2" "$3"; do
+#   echo "thing is $thing"
+# done
+
+for thing in "$@"; do
+  echo "thing is $thing"
+done

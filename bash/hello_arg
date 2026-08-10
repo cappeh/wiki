@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# this will take the first argument given when running the script
+# for example: ./hello_arg calum
+# name=$1
+
+# this will check that an argument has been given
+# if so set the argument to the name variable
+# if not set, ask the user to provide their name and store it in the variable name
+if [[ -n $1 ]]; then
+  name=$1
+else
+  read -p 'Enter your name: ' name
+fi
+
+echo "Hello $name"
