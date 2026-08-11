@@ -47,3 +47,33 @@ for thing in "$@"; do
 done
 ```
 the `$@` expands to be an array of all the arguments given when executing the script
+
+## Functions
+Functions are basically mini programs
+functions also emit an exit code similar to a program. we can use `return <id>` as the last line of a function to express success or failure
+and run `$?` to check the return code
+
+in this example we can call a script from another script. So this will call the ./hello script with each argument we give
+this runs hello from the current directory './'
+```
+for name in "$@"; do
+  ./hello $name
+done
+```
+
+this is a function example
+```
+greet() {
+  local name=$1
+  echo "hello $name"
+}
+
+for name in "$@"; do
+  greet "$name"
+done
+```
+
+without the local keyword, `name` in the `greet` function would be a global variable. 
+so the variable `name` in `greet` without the `local` keyword would overwrite the name variable in the for loop
+
+functions emit data and print to stdout which means we can store the output in a variabe `$(..)` or redirect to a file

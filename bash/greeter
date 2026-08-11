@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+greet() {
+  local name=$1       # without local, name would be a global variable and would overwrite the name variable in the loop or anywhere else in code
+  echo "hello $name"
+}
+
+# this will loop through the arguments given when executing the script and pass them
+# to the greet function
+for name in "$@"; do
+  greet "$name"
+done
