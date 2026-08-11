@@ -77,3 +77,92 @@ without the local keyword, `name` in the `greet` function would be a global vari
 so the variable `name` in `greet` without the `local` keyword would overwrite the name variable in the for loop
 
 functions emit data and print to stdout which means we can store the output in a variabe `$(..)` or redirect to a file
+
+## Conditionals
+
+the following snippet will print 'a and b are the same' to standard output
+
+```
+a=2
+b=2
+
+if [[ $a == $b ]]; then
+  echo 'a and b are the same'
+fi
+```
+
+we used '' (single quotes) to echo the text, something we dont have to do. It is useful if there are multiple spaces / whitespace in the text and you want to maintain the spaces
+"" (double quotes) are useful if doing variable expansion for example "$a and $b are the same". This would print `2 and 2 are the same`
+
+```
+c=2
+d=3
+
+if [[ $c != $d ]]; then
+  echo 'c and d are NOT equal'
+fi
+```
+
+in this second example we are checking whether c is not equal to d. If its not equal, print `c and d are NOT the same`
+
+```
+if [[ -f file.txt ]]; then
+  echo 'file.txt exists and is a file'
+fi
+```
+
+the `[[ -f file ]]` test checks whether a file exists. `[[ .. ]]` can also be run as a command
+you can determine whether this was true or false by running `$?` 0 is true, 1 is false
+if the file exists the echo statement will be printed to stdout
+if it does not exist, the output will not be written
+
+`help test` in bash to show what operators are available to test with other than `-f` for zsh, `man zshall | less -p 'CONDITIONAL EXPRESSIONS'`
+with zsh, we pipe to less, so we can apply a filter in this example 'CONDITIONAL EXPRESSIONS'
+
+we could put anything after the if command. so we could do
+
+```
+if ls; then
+  echo 'the ls command worked'
+fi
+```
+
+we can also use a `while` loop checking whether a files exists and once its removed, the `while` loop ends
+
+```
+while [[ -f file.txt ]]; do
+  echo 'file.txt exists and is a file'
+  sleep 1
+done
+```
+the sleep function/program will pause for n amount of time before checking the while condition
+this will continually print 'file.txt exists and is a file' until the file is deleted with `rm`
+
+`until` is the opposite of while
+so if we do `until [[ -f file.txt ]]`, this means until the file exists echo a message
+
+```
+until [[ -f file.txt ]]; do
+  echo 'file.txt does NOT exist'
+done
+```
+
+we could also just negate a while statement `while ! [[ -f file.txt ]]`
+
+`if true` and `if false` could also be used. `true` is `0` false is `1`
+
+we could put something like
+
+```
+if apt-get update; then
+  echo 'update complete'
+else
+  echo 'update could not complete'
+fi
+```
+
+we can also chain commands so we could run `[[ -f file.txt ]] && echo it exists`
+this will echo `it exists` aslong as the file also exists
+
+you can also do `[ -f file.txt ]` with single brackets or `test -f file.txt`. while these are valid they are more for POSIX
+generally use `[[..]]`

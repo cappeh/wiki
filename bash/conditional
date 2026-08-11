@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+if [[ -f file.txt ]]; then
+  echo 'file.txt exists and is a file'
+fi
+
+while ! [[ -f file.txt ]]; do
+  echo 'file does not exist'
+  sleep 1
+done
