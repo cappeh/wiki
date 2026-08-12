@@ -166,3 +166,24 @@ this will echo `it exists` aslong as the file also exists
 
 you can also do `[ -f file.txt ]` with single brackets or `test -f file.txt`. while these are valid they are more for POSIX
 generally use `[[..]]`
+
+## For Loops
+
+we can use `{1..5}` or `{a..f}` syntax within a for loop to exand them to 1 through 5 or a through f
+
+```
+for thing in {1..5}; do
+  echo "thing is $thing"
+done
+```
+this will print `thing is 1`, `thing is 2` etc on a new line until `thing is 5`
+
+there is also a c style for loop for using arithmetic using `((..))`, using parenteses is for mathmatical operations
+with this syntax we co not need to expand variables because math syntax is aware of variables
+
+```
+max=5
+for ((i=0; i<max; i++)); do
+  echo "thing is $i"
+done
+```
