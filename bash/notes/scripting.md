@@ -219,3 +219,100 @@ for name in "$@"; do
 ```
 
 we could also do `d* | *b)` similar to an `OR` statement
+
+## Indexed Arrays
+
+we use the syntax `array=()`
+
+`array=(foo bar baz)`, an `array` with 3 items seperated with a space
+if we expand it `echo $array`, you will only get the first element of the array
+we can use `[]` notation for an element like in other languages but `{}` needs to surround the variable: `echo "${array[0]}"`
+with 3 elements (indexing starts at 0), if we do `echo "${array[3]}` it will echo an empty line at it just treats it like a space
+we can also use negative numbers `[-1]` will echo the last element
+
+we can put the index we want in a variable
+
+```
+idx=2
+echo "${array[$idx]}"
+```
+the dollar sign is optional when indexing with a variable `[idx]` is perfectly valid in the above code
+
+we can use the following to print all the items in an array:
+`echo "*: ${array[*]}"`
+`echo "@: ${array[@]}"`
+
+if we loop over the items in the array:
+```
+for item in "${array[*]}"; do
+  echo "item is: $item"
+done
+```
+this will print one line: `item is: foo bar baz`
+`*` is when we are stringifying the elements in an array (when we want a string at the end of it)
+
+`@` is when we want to treat it like an actual array where we want to iterate over it
+**the @ symbol in this format `"${array[@]}` is the correct way to loop over an array in bash**
+
+we can explicitly create an array with `delcare`, `declare -a array=(foo bar baz)`
+
+to copy an array, we do the following:
+`second_array=("${first_array[@]}")`. this creates a new array that includes all the items in the first array
+if we dont surround with `()`, `second_array` will be treated as one long string
+we can also add/extend to the array like this: `second_array+=(bat cat ls)`
+
+in the terminal we can do the following which pretty prints the array. It provides information about the type of variable and its contents
+
+```
+array=(foo bar baz)
+declare -p array
+```
+this will print `declare -a array=([0]="foo" [1]="bar" [2]="baz")`
+it shows how the array was actually created, which is also a valid way of creating an array in a script or the shell
+we can also do `declare -a array=([45]="foo")` where we can retrieve the array with `echo "${array[45]}"`
+
+this syntax will get the length of the array: `echo "${#array}"`
+this would show you the length of a specific element `echo "${array[1]}"`
+
+so we can also get the length of other variables with this method
+
+```
+var="hello world"
+echo "${#var}"
+```
+
+## Associative Array
+this is like a dictionary in Python. Key Value pairs
+
+we start an array like this `declare -A`. **We Must Do This**
+
+this was available from Bash 4.X so if we want to check in a script whether this is valid in whatever version is runnning:
+```
+if ! declare -A arr; then
+  echo "incorrect bash version, unable to declare an associative array"
+  exit 1
+fi
+```
+
+```
+declare -A arr
+
+arr[foo]=1
+arr[bar]=2
+arr[baz]=3
+```
+we can echo these like `echo "${arr[foo]}"`
+
+we can also use `"${arr[*]}"` or `"${arr[@]}"` which will just print the **values**
+we can print the keys only with `echo "${!arr[*]}"`. we usually want the `*` to stringify the output
+
+so we can do the following to loop over the array
+
+```
+for key in "${arr[@]}"; do
+  value=${arr[$key]}
+  echo "got $key=$value"
+done
+```
+
+the `$` is required when getting a value from the array in a loop
