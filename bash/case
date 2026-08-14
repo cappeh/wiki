@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+system=$(uname)
+
+case "$system" in 
+  Darwin) echo "System is MacOS";;
+  Linux)  echo "System is Linux";;
+  *)      echo "Something Else";;
+esac

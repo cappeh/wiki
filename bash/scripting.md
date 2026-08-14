@@ -187,3 +187,35 @@ for ((i=0; i<max; i++)); do
   echo "thing is $i"
 done
 ```
+
+## Case Statements
+case is a way to match on something specific and execute the commands within that case statement. After a match, it breaks out of the case.
+it will only match on the first statement that matches the variable so if the case is `dave` if the first statement is `d*)` then it will match on this even if the second statement is `dave)`
+this is the default behaviour when ending the statement with `;;`
+when ending the statement with `;&` this means **always fallthrough**. after a match it will fallthrough to the next statement and print that whether it matches or not
+when ending with `;;&` it will check all statements for a match. If there is a match execute the command in the statement. This would also match on the default `*)`
+we can use a wildcard `*)`
+
+```
+s=$1
+
+case "$s" in
+  dave)
+    echo hi dave;;
+  buddy)
+    echo ohh there he is;;
+  guy)
+    echo uh oh here comes trouble;;
+esac
+```
+
+```
+for name in "$@"; do
+  case "$name" in
+    d*) hello "$name";;
+    b*) hello "$name";;
+    *)  goodbye "$name";;
+  esac
+```
+
+we could also do `d* | *b)` similar to an `OR` statement
