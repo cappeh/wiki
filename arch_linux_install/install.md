@@ -243,6 +243,12 @@ Exec = /usr/bin/cp /usr/share/limine/BOOTX64.EFI esp/EFI/arch-limine/
 
 ## Reboot
 
+before continuing make sure Network Manager is enabled
+
+```bash
+systemctl enable NetworkManager
+```
+
 ```bash
 # exit out of chroot
 exit
@@ -250,4 +256,10 @@ exit
 umount -R /mnt
 #
 reboot
+```
+
+## Connect Back to Wifi
+
+```bash
+nmcli device wifi connect <SSID> password <password>
 ```
