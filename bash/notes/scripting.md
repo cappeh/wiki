@@ -287,7 +287,8 @@ this is like a dictionary in Python. Key Value pairs
 we start an array like this `declare -A`. **We Must Do This**
 
 this was available from Bash 4.X so if we want to check in a script whether this is valid in whatever version is runnning:
-```
+
+```bash
 if ! declare -A arr; then
   echo "incorrect bash version, unable to declare an associative array"
   exit 1
@@ -308,7 +309,7 @@ we can print the keys only with `echo "${!arr[*]}"`. we usually want the `*` to 
 
 so we can do the following to loop over the array
 
-```
+```bash
 for key in "${arr[@]}"; do
   value=${arr[$key]}
   echo "got $key=$value"
@@ -316,3 +317,26 @@ done
 ```
 
 the `$` is required when getting a value from the array in a loop
+
+## IFS Variable (Internal Field Separator)
+this is built in to bash which is a special argument
+by default this is set to "Space, New Line Character, Tab" (whitespace characters)
+
+```bash
+array=(foo bar baz)
+echo "array is: ${array[*]}"
+```
+in the above, the array is stringified using the first variable of the IFS `space`
+
+so it prints `array is foo bar baz`
+
+```bash
+array=(foo bar baz)
+IFS=hello
+echo "array is: ${array[*]}"
+```
+
+in this new example the script will write `array is: foohbarhbaz`
+because `h` is the first character in the new IFS
+
+we can follow this up with `unset IFS` to return this back to its default
