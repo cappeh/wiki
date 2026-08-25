@@ -340,3 +340,150 @@ in this new example the script will write `array is: foohbarhbaz`
 because `h` is the first character in the new IFS
 
 we can follow this up with `unset IFS` to return this back to its default
+
+## Command Substitution
+command substitution is a way of storing the output of commands such as `whoami` into a variable
+
+```bash
+#!/usr/bin/env bash
+
+user=`whoami`
+echo "$user"
+```
+
+we can use `` to get the output of the command. in the above example "calum" would be displayed
+
+we can also nest the commands. However, it starts to become a little messy
+
+```bash
+#!/usr/bin/env bash
+
+whoami
+echo `echo \`whoami\``
+```
+
+the first 'whoami' will print the user to the screen.
+the second line will call echo from echo. we also need to escape the whoami because we are nesting
+
+the more modern way is to use `$(..)` notation
+`echo $(whoami)`
+
+we can also nest this like before `echo $(echo $(whoami))`
+
+```bash
+#!/usr/bin/env bash
+
+my-func() {
+    echo hi
+}
+
+thing=$(my-func)
+echo "thing is $thing"
+```
+
+when we use `$(..)`, the command is run in a subshell
+
+```bash
+#!/usr/bin/env bash
+
+i=5
+
+my-func() {
+    i=6
+    echo hi
+}
+
+thing=$(my-func)
+echo "thing is $thing"
+```
+
+in the above, with command substitution, the global variable i is not modified. once the command substitution has ended, `i=6` is dropped
+if we just ran `my-func` instead of using command substitution, the variable would be modified
+
+in bash 5.3, we can use this syntax `thing=${ my-func; }` which will run the command in the main shell instead of a subshell
+
+## Arithmetic Expression
+
+`help '(('` also look at `help let`
+the `(())` is for arithmetic or math expression
+
+```bash
+#!/usr/bin/env bash
+
+thing=$(( 2 + 2 ))
+echo "thing is $thing"
+```
+
+you can also use this from the terminal `echo $(( 57 * 2 ))`
+
+```bash
+#!/usr/bin/env bash
+
+a=2
+b=3
+
+echo "$(( $a + $b ))"
+```
+
+you can also use the echo command with out expanding the variables inside the '((', such as `echo $(( a + b ))`, bash understands that a and b are variables
+you could also do `(( c = a + b ))` and `echo $c`
+
+```bash
+i=2
+(( i << 5))         # this == 64
+
+(( i *= 5 ))        # this == 10
+```
+
+with `(())` we can do a ternary operation
+
+```bash
+#!/usr/bin/env bash
+
+a=2
+b=3
+
+(( max = a > b ? a : b))
+echo "i = $max"
+```
+
+bash will run the expression and after the `?`, if its true return a otherwise return b
+the expression could also be a failure. Anything that == 0 in bash is considered a fail
+leading 0's can also be an issue because bash would treat it as octal. `a=010; echo $(( a ))` would print 8
+if we want that to be a decimal number we do `echo $(( 10#$a ))`
+
+## Process Substitution
+
+this is the syntax `$<(..)`
+
+```bash
+#!/usr/bin/env bash
+
+words=$(grep d /usr/share/dict/words)
+
+i=0
+for word in $words; do
+    echo "$word"
+    ((i++))
+done
+
+echo "found $i words"
+```
+
+whilst the above code will work, it is not the correct way to do this
+also if `""` is not surrounding the `$words` and the code still works, its technically incorrect. Adding `""` adds more resilliency
+when we surround `$words` in quotes, all the words will be printed, but only 1 will be found not the 61055 that there actually would be
+the above will read all words into memory
+
+```bash
+#!/usr/bin/env bash
+
+i=0
+while read -r word; do
+    echo "$word"
+    (( i++ ))
+done < <(grep d /usr/share/dict/word)
+
+echo "found $i words"
+```
+this streams it rather than reading it all into memory but we cant easily detect whether grep completed successfully
