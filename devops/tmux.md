@@ -3,28 +3,28 @@
 ## Sessions
 
 ### Creating Sessions
-```
+```bash
 tmux new
 ```
 - Open a new session
 
-```
+```bash
 tmux new -s mysession
 ```
 - Open a new **named** session
 
 ### Managing Sessions
-```
+```bash
 tmux ls
 ```
 - List all sessions
 
-```
+```bash
 tmux attach
 ```
 - Attach to the most recent session
 
-```
+```bash
 tmux attach -t mysession
 ```
 - Attach to a specific session
