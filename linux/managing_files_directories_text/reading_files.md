@@ -1,6 +1,5 @@
 # Reading Files
 
-
 ## Reading an entire file
 the concatenate command or `cat` is the utility to use for viewing a text file.
 the commands original purpose was to join text files together and output them. However it is used to display a single text file
@@ -9,7 +8,7 @@ the commands original purpose was to join text files together and output them. H
 
 the command will print the entire file to the screen. When your prompt is returned, the line above is the last line of the file.
 
-```
+```bash
 [linux_lab@localhost ~]$ cat ps_out_original.txt 
     PID TTY      STAT   TIME COMMAND
    5182 tty2     Ssl+   0:00 /usr/libexec/gdm-wayland-session --register-session gnome-session
@@ -19,9 +18,10 @@ the command will print the entire file to the screen. When your prompt is return
   22389 pts/0    S+     0:00 tee ps.txt
 [linux_lab@localhost ~]$ 
 ```
+
 the `-n` or `--number` option will add line numbers to the output
 
-```
+```bash
 [linux_lab@localhost ~]$ cat --number ps_out_original.txt 
      1	    PID TTY      STAT   TIME COMMAND
      2	   5182 tty2     Ssl+   0:00 /usr/libexec/gdm-wayland-session --register-session gnome-session
@@ -31,8 +31,8 @@ the `-n` or `--number` option will add line numbers to the output
      6	  22389 pts/0    S+     0:00 tee ps.txt
 [linux_lab@localhost ~]$ 
 ```
-an alternative to `cat` is `bat` (https://github.com/sharkdp/bat)
 
+an alternative to `cat` is `bat` (https://github.com/sharkdp/bat)
 
 another command that can be used to display an entire text file is the `pr` command
 its original use was to format text files for printing now it can be used to display a file with special formatting
@@ -42,7 +42,7 @@ its original use was to format text files for printing now it can be used to dis
 to display one file, you need to use the page length option `-l or --length`. Without this option a small text file will roll off screen. You need to scroll up to see it
 the `-t or --omit` switch is useful to only see the text within the file
 
-```
+```bash
 [linux_lab@localhost ~]$ pr -tl 10 ps_out_original.txt 
     PID TTY      STAT   TIME COMMAND
    5182 tty2     Ssl+   0:00 /usr/libexec/gdm-wayland-session --register-session gnome-session
@@ -55,7 +55,7 @@ the `-t or --omit` switch is useful to only see the text within the file
 
 the `pr` command can also be used to show two short files side by side using the `-m or --merge` switch
 
-```
+```bash
 [linux_lab@localhost ~]$ pr -mtl 15 ps_out_original.txt numbers.txt 
     PID TTY	 STAT	TIME COMMAN         42
    5182 tty2	 Ssl+	0:00 /usr/l     2A
@@ -77,7 +77,7 @@ could also use the `paste` command
 
 the pattern is the string you are searching for in the given file for example:
 
-```
+```bash
 [linux_lab@localhost ~]$ grep linux_lab /etc/passwd
 linux_lab:x:1000:1000:linux_lab:/home/linux_lab:/bin/bash
 
@@ -86,6 +86,7 @@ linux_lab:x:1000:1000:linux_lab:/home/linux_lab:/bin/bash
 [linux_lab@localhost ~]$ grep -i Linux_lab /etc/passwd
 linux_lab:x:1000:1000:linux_lab:/home/linux_lab:/bin/bash
 ```
+
 grep is case-sensitive as can be seen in the second command as the given pattern must match exactly
 the `-i or --ignore-case` switch can be used to ingore the case during the search
 
@@ -95,7 +96,7 @@ the `head` command displays the first 10 lines of a text file by default
 
 `head [OPTION]... [FILE]...`
 
-```
+```bash
 [linux_lab@localhost ~]$ head /etc/passwd
 root:x:0:0:root:/root:/bin/bash
 bin:x:1:1:bin:/bin:/sbin/nologin
@@ -108,10 +109,11 @@ halt:x:7:0:halt:/sbin:/sbin/halt
 mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
 operator:x:11:0:operator:/root:/sbin/nologin
 ```
+
 the `-n or --lines=` switch can change the default behaviour by showing the first X amount of lines of a file
 you can also use a negative number `-30` to eliminate the files bottom lines
 
-```
+```bash
 [linux_lab@localhost ~]$ head -n 4 /etc/passwd
 root:x:0:0:root:/root:/bin/bash
 bin:x:1:1:bin:/bin:/sbin/nologin
@@ -124,7 +126,6 @@ bin:x:1:1:bin:/bin:/sbin/nologin
 daemon:x:2:2:daemon:/sbin:/sbin/nologin
 ```
 
-
 ### TAIL
 
 the `tail` command is the opposite to head and will show the last 10 lines of a file by default
@@ -135,7 +136,7 @@ as with the `head` command, the `-n or --lines=` option will change the default 
 if you add a `+` before the number the utility will display from that line number to the end of the file
 the example below will start at line 25 and output the rest of the lines
 
-```
+```bash
 [linux_lab@localhost ~]$ tail -n +25 /etc/passwd
 flatpak:x:992:991:Flatpak system helper:/:/usr/sbin/nologin
 libstoragemgmt:x:990:990:daemon account for libstoragemgmt:/:/usr/sbin/nologin
@@ -148,6 +149,7 @@ dnsmasq:x:986:985:Dnsmasq DHCP and DNS server:/var/lib/dnsmasq:/usr/sbin/nologin
 tcpdump:x:72:72::/:/sbin/nologin
 linux_lab:x:1000:1000:linux_lab:/home/linux_lab:/bin/bash
 ```
+
 the `tail` command is also a good utility to watch log files live, as new messages get appended to the bottom of the file
 we can use the `-f or --follow` switch
 to end the session, use `CTRL + C`
@@ -157,7 +159,7 @@ to end the session, use `CTRL + C`
 some log files have been replaced in some linux distros and the messages are kept in a `journal` file managed by `journald`
 to watch messages being added to the journal file use `journalctl --follow`
 
-```
+```bash
 [linux_lab@localhost ~]$ journalctl --follow
 Apr 23 08:07:11 localhost.localdomain NetworkManager[1076]: <info>  [1776928031.8509] dhcp4 (ens160): state changed new lease, address=172.16.72.129
 Apr 23 08:07:11 localhost.localdomain systemd[1]: Starting Network Manager Script Dispatcher Service...
@@ -175,6 +177,7 @@ Apr 23 08:22:44 localhost.localdomain systemd[1]: Started Hostname Service.
 Apr 23 08:22:44 localhost.localdomain gnome-shell[2120]: g_object_ref: assertion 'G_IS_OBJECT (object)' failed
 ^C
 ```
+
 here at 08:22:43 I opened the network settings menu from the toolbar on a Rocky Linux VM
 
 ## Pagers

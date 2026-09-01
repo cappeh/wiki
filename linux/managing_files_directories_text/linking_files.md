@@ -16,7 +16,7 @@ can be used if not enough filesystem storage to back up the files data
 
 to create a hardlink we use the `ln` command
 
-```
+```bash
 [linux_lab@localhost ~]$ ln ps_out_original.txt ps_out_hardlink.txt
 
 [linux_lab@localhost ~]$ ls -i ps_out_*
@@ -29,6 +29,7 @@ to create a hardlink we use the `ln` command
 -rw-r--r--. 1   0 Apr 14 14:05 ps_out_new.txt
 -rw-r--r--. 2 303 Mar 27 13:02 ps_out_original.txt
 ```
+
 the `ps_out_hardlink.txt` file was created by the `ln` command
 `ls -i` shows that the indode number for the ps out files are the same
 
@@ -55,7 +56,7 @@ filename#2 (inode #5678) -----------> filename#1 (inode #1234)
 
 to create a softlink we use the `ln` command with the `-s` option or `--symbolic`
 
-```
+```bash
 [linux_lab@localhost Documents]$ touch originalSFile.txt
 
 [linux_lab@localhost Documents]$ ls
@@ -71,6 +72,7 @@ total 0
 -rw-r--r--. 1  0 Apr 15 07:50 originalSFile.txt
 lrwxrwxrwx. 1 17 Apr 15 07:51 softlink.txt -> originalSFile.txt
 ```
+
 this shows that the inode number for the original file is different to the new softlink.txt file that has been created
 the `ls -og` command also shows the pointer from softlink.txt to originalSFile.txt
 the link count does also **not** increase like it does for hard links

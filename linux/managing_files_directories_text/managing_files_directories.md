@@ -9,31 +9,36 @@ the `ls` (list) command is used to view a files name and their `metadata`
 
 basic ls syntax
 
-```
+```bash
 ls [option] [file]
 ```
 
 options AKA `switches` can be used to provide different kinds of metadata of the file --> these are optional
 the file can either be a single file or a directory to see the metadata for a file or for files within the given directory --> also optional
 
-```
+```bash
 [linux_lab@localhost ~]$ ls
 Desktop  Documents  Downloads  find_results.txt  Music  Pictures  ps.txt  Public  Templates  Videos
 
 [linux_lab@localhost ~]$ pwd
 /home/linux_lab
 ```
+
 ls without any options or filenames will display the files and sub-directories within the `Present Working Directory (PWD)`
 the `PWD` is your login processes current location within the `virtual directory`
 
- -a | --all | display all file and directory names including hidden files             
- -d | --directory | show the directories own metadata instead of its contents         
- -F | --classify | classify each file type with an indicator (/ after a name to indicate directory)             
- -i | --inode | display file and sub directory name with their index number            
- -l | N/A | display file or sub dir metadata such as file type, file access permissions, hard link count, file owner and group, modification date and time             
- -R | N/A | show a directories contents and recursively show all sub-directories content within the original directory tree
 
-```
+| OPTION | LONG OPTION | DESCRIPTION |
+|--------|-------------|-------------|
+| `-a`   | `--all`     | display all file and directory names including hidden files |
+| `-d`   | `--directory` | show the directory's own metadata instead of its contents |
+| `-F`   | `--classify` | classify each file type with an indicator (`/` after a name to indicate directory) |
+| `-i`   | `--inode`   | display file and subdirectory names with their index number |
+| `-l`   | `N/A`       | display file or subdirectory metadata such as file type, file access permissions, hard link count, file owner and group, modification date and time |
+| `-R`   | `N/A`       | show a directory's contents and recursively show all subdirectories' contents within the original directory tree |
+
+
+```bash
 [linux_lab@localhost ~]$ ls -l
 total 84
 drwxr-xr-x. 2 linux_lab linux_lab     6 Feb  5 15:34 Desktop
@@ -47,9 +52,10 @@ drwxr-xr-x. 2 linux_lab linux_lab     6 Feb  5 15:34 Public
 drwxr-xr-x. 2 linux_lab linux_lab     6 Feb  5 15:34 Templates
 drwxr-xr-x. 2 linux_lab linux_lab     6 Feb  5 15:34 Videos
 ```
+
 the `ls -lh` command displays extra metadata about each file or directory and will display the file size in a human readable format
 
-```
+```bash
 [linux_lab@localhost ~]$ ls -lh
 total 84K
 drwxr-xr-x. 2 linux_lab linux_lab   6 Feb  5 15:34 Desktop
@@ -66,7 +72,7 @@ drwxr-xr-x. 2 linux_lab linux_lab   6 Feb  5 15:34 Videos
 
 the `tree` command will show a graphical view of the of the file structure showing which files are associated with which directory
 
-```
+```bash
 [linux_lab@localhost home]$ tree
 .
 └── linux_lab
@@ -89,7 +95,7 @@ the `tree` command will show a graphical view of the of the file structure showi
 this is a similar to command to `ls` but `lsof` lists `open files`.
 lists files currently open by a user process. allows us to find files open by a specific user, program or network connection
 
-```
+```bash
 [linux_lab@localhost ~]$ lsof -u linux_lab
 COMMAND     PID      USER   FD      TYPE             DEVICE  SIZE/OFF       NODE NAME
 systemd    5160 linux_lab  cwd       DIR              253,0       235        128 /
@@ -110,7 +116,7 @@ the original purpose of the `touch` command was to modify access and modificatio
 you can create a single or multiple files with the touch commmand
 for creating multiple files, list out the file names seperated bu a space
 
-```
+```bash
 [linux_lab@localhost Documents]$ touch project1.txt
 [linux_lab@localhost Documents]$ ls
 project1.txt
@@ -119,6 +125,7 @@ project1.txt
 project12.txt  project1.txt  project22.txt  project32.txt
 [linux_lab@localhost Documents]$ 
 ```
+
 from a user perspective, a directory contains files. But the directory is a special `file used to locate other files`
 a file for which the directory is responsible has some of its metadata stored within the directory file such as the filename and inode number.
     - a file can then be located by its managing directory
@@ -126,7 +133,7 @@ the inode contains the actual files permissions, size, timestamps etc.
 
 the `mkdir` command will create an empty directory in the current working directory. we can use the `-v` switch to show us whether the directory has been created
 
-```
+```bash
 [linux_lab@localhost Documents]$ mkdir Projects
 [linux_lab@localhost Documents]$ ls
 Projects
@@ -134,13 +141,14 @@ Projects
 [linux_lab@localhost Documents]$ mkdir -v Projects
 mkdir: created directory 'Projects'
 ```
+
 to create a directory in a different location than the cwd, an absolute path can be used. a sub-directory cannot be created without a parent directory.
 the `-p` switch overwrites this and will create any non-existent directory in the path provided
 
 for example, when creating the sub-dir `something_else`, the parent directory `some_dir` does not exist,
 using the `-p` switch, some_dir is created first, followed by something else
 
-```
+```bash
 [linux_lab@localhost Documents]$ mkdir -p /home/linux_lab/some_dir/something_else
 [linux_lab@localhost Documents]$ cd
 [linux_lab@localhost ~]$ ls
@@ -148,27 +156,31 @@ Desktop  Documents  Downloads  find_results.txt  Music  Pictures  ps.txt  Public
 [linux_lab@localhost ~]$ 
 ```
 
-```
+```bash
 [linux_lab@localhost Documents]$ mkdir -pv /home/linux_lab/some_dir/something_else
 mkdir: created directory '/home/linux_lab/some_dir'
 mkdir: created directory '/home/linux_lab/some_dir/something_else'
 [linux_lab@localhost Documents]$
 ```
+
 ## Copy/Move
 ### Copy
 to copy a file or directory locally, we use the `cp` command
 
 `cp [option]... SOURCE DESTINATION`
 
- -a | --archive | this will perform a recursive copy and maintain the files original attributes (permissions, ownership, timestamps)
- -f | --force | overwrite any pre-existing destination file with the same name as DESTINATION
- -i | --interactive | ask before overwriting any pre-existing file with the same name as DESTINATION
- -n | --no-clobber | do not overwrite any pre-existing file name
- -r, -R | --recursive | copy a directories contents and for any directory in the directory tree, copy its contents as well
- -u | --update | only overwrite pre-existing destination files with the same name as DESTINATION, if the source file is newer
- -v | --verbose | detailed command action information as cp is being executed
+| OPTION | LONG OPTION | DESCRIPTION |
+|--------|-------------|-------------|
+| `-a`   | `--archive` | this will perform a recursive copy and maintain the files original attributes (permissions, ownership, timestamps) |
+| `-f`   | `--force`   | overwrite any pre-existing destination file with the same name as `DESTINATION` |
+| `-i`   | `--interactive` | ask before overwriting any pre-existing file with the same name as `DESTINATION` |
+| `-n`   | `--no-clobber` | do not overwrite any pre-existing file name |
+| `-r`, `-R` | `--recursive` | copy a directories contents and for any directory in the directory tree, copy its contents as well |
+| `-u`   | `--update` | only overwrite pre-existing destination files with the same name as `DESTINATION`, if the source file is newer |
+| `-v`   | `--verbose` | detailed command action information as `cp` is being executed |
 
-```
+
+```bash
 [linux_lab@localhost Documents]$ cp -r Projects/ Tasks
 [linux_lab@localhost Documents]$ cp -a Projects/ Programs
 [linux_lab@localhost Documents]$ ls
@@ -179,6 +191,7 @@ drwxr-xr-x. 2 linux_lab linux_lab 126 Apr  1 14:05 Programs
 drwxr-xr-x. 2 linux_lab linux_lab 126 Apr  1 14:05 Projects
 drwxr-xr-x. 2 linux_lab linux_lab 126 Apr  1 14:11 Tasks
 ```
+
 using the `cp -a` command, we can see that the modification time remains the same, using `cp -r` the modification time is when the file/folder is copied
 
 ### Move
@@ -186,11 +199,15 @@ to move or rename a file locally, we use the `rm` command
 
 `mv [option]... SOURCE DESTINATION`
 
- -f | --force | overwrite any pre-existing destination file with the same name as DESTINATION
- -i | --interactive | ask before overwriting any pre-existing file with the same name as DESTINATION
- -n | --no-clobber | do not overwrite any pre-existing file name
- -u | --update | only overwrite pre-existing destination files with the same name as DESTINATION, if the source file is newer
- -v | --verbose | detailed command action information as cp is being executed
+
+| OPTION | LONG OPTION | DESCRIPTION |
+|--------|-------------|-------------|
+| `-f`   | `--force`   | overwrite any pre-existing destination file with the same name as `DESTINATION` |
+| `-i`   | `--interactive` | ask before overwriting any pre-existing file with the same name as `DESTINATION` |
+| `-n`   | `--no-clobber` | do not overwrite any pre-existing file name |
+| `-u`   | `--update` | only overwrite pre-existing destination files with the same name as `DESTINATION`, if the source file is newer |
+| `-v`   | `--verbose` | detailed command action information as `cp` is being executed |
+
 
 For faster copies of large files or a large group of files, the `rsync` command should be used
 `rsync` is often used to create backups and securely copy files over the network

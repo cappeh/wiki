@@ -6,7 +6,7 @@ these are commands that can locate files on your system such as utilities, confi
 
 The `which` command shows the full pathname of an executable if it is located in one of the directories listed in the $PATH environment variable.
 
-```
+```bash
 [linux_lab@localhost ~]$ which diff
 /usr/bin/diff
 
@@ -26,21 +26,23 @@ whether a program is installed on the system
 
 the which command uses the `PATH` environment variable which contains all the directories the which program will search through
 
-```
+```bash
 [linux_lab@localhost ~]$ which ls
 alias ls='ls --color=auto'
 	/usr/bin/ls
 ```
+
 the `which` command can also be used to identify is a command is using an alias like the `ls` command in Rocky Linux
 
 ## Whereis
 
 the `whereis` command will help you find where the executable is located as well as its source code files and man pages
 
-```
+```bash
 [linux_lab@localhost ~]$ whereis diff
 diff: /usr/bin/diff /usr/share/man/man1/diff.1.gz
 ```
+
 in the above example, the binary for diff and a man page is found
 
 ## Locate
@@ -52,10 +54,11 @@ the `locate` program can be used to find files on the local system. It searches 
 the PATTERN means that regex can be used to find a file or partial filenames
 if the file you are locating is on your system and you have permission to view it, the `locate` utility will display the file path and name
 
-```
+```bash
 [linux_lab@localhost ~]$ locate ps_out_original.txt 
 /home/linux_lab/ps_out_original.txt
 ```
+
 file globbing is used by default using wildcards such as `*` or `?` which can expand a filename in to multiple names
 such as `passw*d` could be expanded in to 'password' or 'passwrd'
 
@@ -63,7 +66,7 @@ if no wildcards are included in the PATTERN, `locate` by default will add wildca
 so `passwd` would become `*passwd*`
 to search for the basename `passwd` you would need to enclose the pattern in quotation marks ('' / "") and precede the patter with \
 
-```
+```bash
 [linux_lab@localhost ~]$ locate -b passwd
 /etc/passwd
 /etc/passwd-
@@ -90,11 +93,12 @@ to search for the basename `passwd` you would need to enclose the pattern in quo
 [linux_lab@localhost ~]$ locate -bc passwd
 128
 ```
+
 with file globbing, the `locate` command finds 128 files. (the output has been reduced as it will be too long)
 the `-b` option finds files that match only the basename, dont show files where the pattern matches a directory name
 the `-c` option displays a count of how many files where found instead of printing out the files line by line
 
-```
+```bash
 [linux_lab@localhost ~]$ locate -b '\passwd'
 /etc/passwd
 /etc/pam.d/passwd
@@ -106,6 +110,7 @@ the `-c` option displays a count of how many files where found instead of printi
 [linux_lab@localhost ~]$ locate -bc '\passwd'
 6
 ```
+
 with file globbing turned off, only 6 files are found
 
 if you do not have permission to view the contents of a directory, then the `locate` command will not display those files that match the patterm

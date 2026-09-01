@@ -19,7 +19,7 @@ most Linux Distros copy the kernel messages in to a `ring buffer` in memory `ker
 
 some Linux Distros also store the boot messages in a log file usually in the `/var/log` folder usually `/var/log/boot.log`
 
-```
+```bash
 [linux_lab@localhost ~]$ dmesg
 [    0.000000] Booting Linux on physical CPU 0x0000000000 [0x610f0000]
 [    0.000000] Linux version 5.14.0-611.55.1.el9_7.aarch64 (mockbuild@iad1-prod-build-aarch001.bld.equ.rockylinux.org) (gcc (GCC) 11.5.0 20240719 (Red Hat 11.5.0-11), GNU ld version 2.35.2-67.el9_7.1) #1 SMP PREEMPT_DYNAMIC Tue May 12 18:53:59 UTC 2026

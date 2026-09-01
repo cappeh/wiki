@@ -18,17 +18,18 @@ the `sed` editor changes data based on commands entered through the command line
 
 by default `sed` will use text from STDIN to modify text.
 
-```
+```bash
 [linux_lab@localhost ~]$ echo "I like cake." | sed 's/cake/donuts/'
 I like donuts.
 ```
+
 the `echo` command is piped as STDIN for the `sed editor`
 the `sed` `s (substitute)` utility will change the first instance of 'cake' it comes across to 'donuts' in the output 
 
 the command after `sed` enclosed in '' is considered a `SCRIPT`
 the words are delimited from one another with '/'
 
-```
+```bash
 [linux_lab@localhost ~]$ cat cake.txt 
 I like cake.
 I like cake.
@@ -40,12 +41,13 @@ I like donuts.
 I like donuts.
 I like donuts.
 ```
+
 because `sed` goes line by line, each line that matches the command are modified and sent to STDOUT. the actual file is not modified
 
 in this example, the first command shows that only the first instance of the command is changed per line
 to apply the substitution for each instance of the word on a line, the `g` flag (global) is added at the end of the `sed` script
 
-```
+```bash
 [linux_lab@localhost ~]$ echo "I like cake and even more cake." | sed 's/cake/donuts/'
 I like donuts and even more cake.
 
@@ -56,7 +58,7 @@ I like donuts and even more donuts.
 
 by providing the `-i` option, we can modify the file 
 
-```
+```bash
 [linux_lab@localhost ~]$ sed -i 's/cake/donuts/' cake.txt 
 [linux_lab@localhost ~]$ cat cake.txt 
 I like donuts.
@@ -64,20 +66,22 @@ I like donuts.
 I like donuts.
 [linux_lab@localhost ~]$ 
 ```
+
 ### Some Options
-```
-SHORT           LONG                        DESCRIPTION
-=========================================================================================================================
--e script       --expression=script         with this option we can create multiple scripts for the sed command
--f script       --file=script               use a file with the script for the sed command
--r              --regexp-extended           use extended regular expressions in the script
-```
+
+
+| SHORT | LONG | DESCRIPTION |
+|-------|------|-------------|
+| `-e script` | `--expression=script` | with this option we can create multiple scripts for the `sed` command |
+| `-f script` | `--file=script` | use a file with the script for the `sed` command |
+| `-r` | `--regexp-extended` | use extended regular expressions in the script |
+
 
 here we use the `-e` option which allows us to use multiple script commands. Both scripts should be seperated by a semi-colon `;` but both should still be enclosed in `''`
 allowing both to be processed on the text stream
 the first instance of 'cake' will be substituted by 'donuts' and like wise for 'like' and 'love'
 
-```
+```bash
 [linux_lab@localhost ~]$ cat cake.txt
 someone likes chocolate cake
 another person likes lemon cake
@@ -90,10 +94,11 @@ another person loves lemon donuts
 a friend loves yellow donuts
 someone else does not love donuts
 ```
+
 we can also create a `.sed` file that contains multuple scripts that can be deployed to a text stream
 no quotes are needed when using a sed file
 
-```
+```bash
 [linux_lab@localhost ~]$ cat script.sed 
 s/cake/donuts/
 s/like/love/
@@ -104,6 +109,7 @@ another person loves lemon donuts
 a friend loves yellow donuts
 someone else does not love donuts
 ```
+
 ### More Complex Example
 
 #### Goal
@@ -142,8 +148,7 @@ Result:
 - To pass a literal `\(` to sed, you must escape the backslash: `\\(`  
 - Same for `\1` → `\\1`
 
-
-```
+```bash
 [linux_lab@localhost ~]$ cat some_file.conf 
 MODULES=()
 [linux_lab@localhost ~]$ sed -i -E 's/^(MODULES=\()/\1amd radeon/' some_file.conf
@@ -155,5 +160,4 @@ MODULES=()
 [linux_lab@localhost ~]$ sed -i -E "s/^(MODULES=\\()/\\1amd radeon/" some_file.conf 
 [linux_lab@localhost ~]$ cat some_file.conf 
 MODULES=(amd radeon)
-
 ```

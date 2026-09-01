@@ -2,13 +2,17 @@
 `grep` is useful for searching and matching text patterns in files using regular expressions
 this is usually installed by default on all linux distributions
 
--c              --count                     show a count of text file records that contain a pattern match
--d action       --directories=action        when a file is a directory *read* the directory, *skip* the directory or *recurse* the directory
--E              --extended-regexp           the PATTERN is a extended regular expression
--i              --ignore-case               ignore the case in the PATTERN and when searching files
--R, -r          --recursive                 search a directories contents, and in any sub-directory within the original directory tree
--v              --invert-match              show only text files that do not contain the PATTERN
--n              --line-number               prefix each line with a line number within the input file
+
+| SHORT | LONG | DESCRIPTION |
+|-------|------|-------------|
+| `-c` | `--count` | show a count of text file records that contain a pattern match |
+| `-d action` | `--directories=action` | when a file is a directory, `read` the directory, `skip` the directory, or `recurse` the directory |
+| `-E` | `--extended-regexp` | the `PATTERN` is an extended regular expression |
+| `-i` | `--ignore-case` | ignore the case in the `PATTERN` and when searching files |
+| `-R`, `-r` | `--recursive` | search a directory's contents, and in any subdirectory within the original directory tree |
+| `-v` | `--invert-match` | show only text files that do not contain the `PATTERN` |
+| `-n` | `--line-number` | prefix each line with a line number within the input file |
+
 
 ## Regular Expressions
 a `regular expression` is a pattern template for use in programs such as `grep` which users the pattern to filter text.
@@ -78,7 +82,7 @@ The goal of the next example is to get the TTY keyboard layout from the /etc/vco
 - the cut command will split the line at the delimeter '=' and select the second string '"gb"'
 - finally, tr will strip the double quotes from the string
 
-```
+```bash
 [linux_lab@localhost ~]$ cat /etc/vconsole.conf 
 KEYMAP="gb"
 FONT="eurlatgr"

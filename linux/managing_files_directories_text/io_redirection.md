@@ -16,7 +16,7 @@
 everything in linux / unix-like system is a file. stdin, stdout, stderr are all files in the /proc directory
 the /dev directory has symbolic links to these files
 
-```
+```bash
 [linux_lab@localhost dev]$ ls -l std*
 lrwxrwxrwx. 1 root root 15 Mar  3 11:42 stderr -> /proc/self/fd/2
 lrwxrwxrwx. 1 root root 15 Mar  3 11:42 stdin -> /proc/self/fd/0
@@ -32,13 +32,13 @@ the files that represent stdin, stdout, stderr are known as **F**ile **D**escrip
 
 you can redirect the output of a command to a text file.
 
-```
+```bash
 [linux_lab@localhost ~]$ ls -al > results.txt
 ```
 
 this will take the output of the ls command and sends it to the **results.txt** file
 
-```
+```bash
 [linux_lab@localhost ~]$ cat results.txt 
 total 36
 drwx------. 14 linux_lab linux_lab 4096 Mar 27 09:19 .
@@ -66,7 +66,7 @@ drwxr-xr-x.  2 linux_lab linux_lab    6 Feb  5 15:34 Videos
 
 if the file your directing to already exists, the contents will be overwritten by default
 
-```
+```bash
 [linux_lab@localhost ~]$ ls > results.txt 
 [linux_lab@localhost ~]$ cat results.txt 
 Desktop
@@ -86,14 +86,15 @@ stdout can also be appended to a file rather than overwritting with the >> opera
 
 the **noclobber** option can be set in the terminal to show an error message if we try and overwrite a file
 
-```
+```bash
 [linux_lab@localhost ~]$ set -o noclobber
 [linux_lab@localhost ~]$ ls -al > results.txt
 bash: results.txt: cannot overwrite existing file
 ```
+
 we could still overwrite the file by using the >| operator. no error message will appear and the file contents will be overwritten
 
-```
+```bash
 [linux_lab@localhost ~]$ ls -al >| results.txt
 ```
 
@@ -104,7 +105,7 @@ when **noclobber** is set, it wont prevent the contents being overwritten when w
 
 because stdout is File Descriptor 1, you could also do the following to redirect stdout to a file
 
-```
+```bash
 [linux_lab@localhost ~]$ ls 1> results.txt
 ```
 
@@ -114,7 +115,7 @@ command < inputfile.txt
 
 the `<` operator will inputfile.txt as the stdin for the command instead of the input from a keyboard
 
-```
+```bash
 [linux_lab@localhost ~]$ tr [:lower:] [:upper:] < results.txt 
 DESKTOP
 DOCUMENTS
@@ -126,18 +127,20 @@ RESULTS.TXT
 TEMPLATES
 VIDEOS
 ```
+
 the **tr** command will translate (modify), squeeze, and/or delete characters from standard input and write to standard output 
 In this example the content of results.txt (ls command output) is taken as stdin for the translate command and will translate the contents to UPPER CASE
 the original results.txt file is not changed, the contents are echoed to the stdout
 
-```
+```bash
 [linux_lab@localhost ~]$ tr [:lower:] [:upper:] < results.txt > results_upper.txt 
 ```
+
 this will translate the contents of results.txt and redirect the output to the results_upper.txt file in all UPPER CASE
 
 using `>>` stdout will be appended to the file rather than overwritting
 
-```
+```bash
 [linux_lab@localhost ~]$ tr [:lower:] [:upper:] < results.txt >> results.txt 
 [linux_lab@localhost ~]$ cat results.txt 
 Desktop
@@ -169,7 +172,7 @@ command 2> errorfile.txt
 messages will be sent to stderr (same as stdout) if there is an error when running a command so stderr gets mixed with stdout messages
 `2>>` will append error messages to an existing file
 
-```
+```bash
 [linux_lab@localhost ~]$ find / -name README
 find: ‘/boot/efi’: Permission denied
 find: ‘/boot/grub2’: Permission denied
@@ -181,7 +184,7 @@ this is because a non root user does not have permissions to access all files ac
 
 you can use `2>` to send the error messages to the bit bucket `/dev/null` or to a file so you will only see the stdout (good) output on the terminal/screen
 
-```
+```bash
 [linux_lab@localhost ~]$ find / -name README 2> /dev/null
 /etc/fonts/conf.d/README
 ```
@@ -189,13 +192,13 @@ you can use `2>` to send the error messages to the bit bucket `/dev/null` or to 
 we can combine redirectors so that stdout can be sent to one file but stderr sent to another
 below `find_results.txt` will contain the good (stdout) output while `find_err.txt` will contain the error messages
 
-```
+```bash
 [linux_lab@localhost ~]$ find / -name README > find_results.txt 2> find_err.txt
 ```
 
 the below sends all stdout output to the bitbucket so only error messages are displayed
 
-```
+```bash
 [linux_lab@localhost ~]$ find / -name README > /dev/null
 ```
 
@@ -204,14 +207,14 @@ to send both stdout and stderr to the same file we can use `2>&1` at the end of 
 
 this will send all output (stdout and stderr) to find_results.txt
 
-```
+```bash
 [linux_lab@localhost ~]$ find / -name README > find_results.txt 2>&1
 ```
 
 another way to send both stdout and stderr to the same file is by using `&>`
 this is only available for `bash` and `zsh` as shorthand. the POSIX standard is to use `2>&1`
 
-```
+```bash
 [linux_lab@localhost ~]$ find / -name README &> find_results.txt
 ```
 
@@ -224,7 +227,7 @@ instead of using a redirect symbol, we pipe the output of the first command to t
 here we print the output of the **ps a** command to both the screen and to the file **ps.txt**
 the **-a** option of **tee** will append the output to the file instead of overwritting
 
-```
+```bash
 [linux_lab@localhost ~]$ ps a | tee ps.txt
     PID TTY      STAT   TIME COMMAND
    5182 tty2     Ssl+   0:00 /usr/libexec/gdm-wayland-session --register-session gnome-session
@@ -251,7 +254,7 @@ by default even with sudo, you will get a permission denied when using redirecti
 
 below, the will echo "new setting" to stdout and write the text to the someconfig.conf file
 
-```
+```bash
 [linux_lab@localhost ~]$ echo "new setting" | sudo tee /etc/someconfig.conf
 ```
 

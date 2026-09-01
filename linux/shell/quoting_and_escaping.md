@@ -19,8 +19,7 @@ quoting or escaping will treat these characters literally
 - No command substitution
 - Cannot nest single quotes inside single quotes
 
-
- ```
+ ```bash
 [linux_lab@localhost ~]$ echo 'hello $USER, today is $(date)'
 hello $USER, today is $(date)
  ``` 
@@ -35,8 +34,7 @@ double quotes allow variable and command expansion
 
 Backslash escapes only: ", \, `, $
 
-
- ```
+```bash
 [linux_lab@localhost ~]$ echo "hello $USER, today is $(date)"
 hello linux_lab, today is Fri 15 May 19:13:37 BST 2026
  ``` 
@@ -45,8 +43,7 @@ hello linux_lab, today is Fri 15 May 19:13:37 BST 2026
 
 Useful for escaping $, ", \, or spacescape a meta character making it a literal
 
-
- ```
+```bash
 [linux_lab@localhost ~]$ echo "\"
 .
 [linux_lab@localhost ~]$ echo "\\"

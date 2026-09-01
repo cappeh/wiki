@@ -16,16 +16,19 @@ for some of the `cut` command options to be used effectively, fields must exist 
 this is just data seperated by some delimiter such as ':'
 
 ## Common Options
-Short           Long                    Description
-==========================================================================================================================================================================================
--c nlist        --characters nlist      display only the record characters in the `nlist` (1-5) showing the first to 5 character
--b blist        --bytes blist           similar to `-c` but shows the blist bytes
--d d            --delimiter d           this will set the delimeter to use for the records such as ":" (the boundary between different data items)
--f flist        --fields flist          display only the records fields in `flist` such as 1,3 meaning the first field and the third field
--s              --only-delimited        display only records that contain the delimiter
--z              --zero-delimited        designate the record end-of-line character as ASCII NUL
 
-```
+
+| SHORT | LONG | DESCRIPTION |
+|-------|------|-------------|
+| `-c nlist` | `--characters nlist` | display only the record characters in the `nlist` (1-5) showing the first to 5 character |
+| `-b blist` | `--bytes blist` | similar to `-c` but shows the `blist` bytes |
+| `-d d` | `--delimiter d` | this will set the delimiter to use for the records such as `":"` (the boundary between different data items) |
+| `-f flist` | `--fields flist` | display only the records fields in `flist` such as `1,3` meaning the first field and the third field |
+| `-s` | `--only-delimited` | display only records that contain the delimiter |
+| `-z` | `--zero-delimited` | designate the record end-of-line character as ASCII NUL |
+
+
+```bash
 [linux_lab@localhost ~]$ head -2 /etc/passwd
 root:x:0:0:root:/root:/bin/bash
 bin:x:1:1:bin:/bin:/sbin/nologin
@@ -48,5 +51,6 @@ lp:x:
 sync:
 shutd
 ```
+
 the second command will split the records fields that are delimitered by ":" and show only the first and seventh fields
 the final command will display the first five characters of each line

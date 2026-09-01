@@ -5,7 +5,6 @@ older systems utilize BIOS (Basic Input/Output System) and newer systems use UEF
 
 they maintain the system hardware settings and launch an installed OS
 
-
 ## BIOS
 
 BIOS has a simplistic menu interface where users could change some settings to control how the system found hardware 

@@ -14,21 +14,22 @@ you can use `.` to indicate to `find` to start in the Present Working Directory 
 
 the `OPTION` and `EXPRESSION` arguments control what type of metadata filters are applied to the search or any settings that could limit the search.
 
-OPTION      EXPRESSION      DESCRIPTION
-================================================================================================================================================================
--cmin       n               display names of files whose status changed `n` minutes ago
--empty                      display names of files that are empty and are a regular text file or directory
--gid        n               shows files whose group id is equal to `n`
--group      name            shows files whose group name is equal to `name`
--inum       n               show files whose inode number equals `n`
--maxdepth   n               number of levels to traverse down from the starting point directory
--mmin       n               show files whose data changed `n` mins ago
--name       pattern         display files that match the given `pattern` if using regex enclose the `pattern` in double quotes. use `-iname` to ignore case
--nogroup                    display files where no group name exists for the files group id
--nouser                     display files where no username exists for the files user id
--perm       mode            display files whose permissions match `mode` either `octal` or `symbolic` 
--size       n               show files whose size matches `n`. A suffix can be used to be human friendly like `G` for gigabytes
--user       name            display files whos owner is `name`
+
+| OPTION    | EXPRESSION | DESCRIPTION |
+|-----------|------------|-------------|
+| `-cmin`   | `n`        | display names of files whose status changed `n` minutes ago |
+| `-empty`  |            | display names of files that are empty and are a regular text file or directory |
+| `-gid`    | `n`        | shows files whose group id is equal to `n` |
+| `-group`  | `name`     | shows files whose group name is equal to `name` |
+| `-inum`   | `n`        | show files whose inode number equals `n` |
+| `-maxdepth` | `n`      | number of levels to traverse down from the starting point directory |
+| `-mmin`   | `n`        | show files whose data changed `n` mins ago |
+| `-name`   | `pattern`  | display files that match the given `pattern` if using regex enclose the `pattern` in double quotes. use `-iname` to ignore case |
+| `-nogroup` |           | display files where no group name exists for the files group id |
+| `-nouser` |            | display files where no username exists for the files user id |
+| `-perm`   | `mode`     | display files whose permissions match `mode` either `octal` or `symbolic` |
+| `-size`   | `n`        | show files whose size matches `n`. A suffix can be used to be human friendly like `G` for gigabytes |
+| `-user`   | `name`     | display files whos owner is `name` |
 
 
 `find . -name "*.txt`
@@ -44,7 +45,7 @@ this shows the `/usr/bin` direcptry being audited for the potentially dangerous 
 `/4000` will search for SUID settings (octal code 4) and ignore other file permissions due to / in front of the number and ignore other file permissions (000) 
 the resulting files would legitimately used SUID so nothing suspicious is going on
 
-```
+```bash
 [linux_lab@localhost ~]$ find /usr/bin -perm /4000
 /usr/bin/chage
 /usr/bin/gpasswd

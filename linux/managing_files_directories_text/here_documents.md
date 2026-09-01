@@ -6,7 +6,7 @@ the redirection operator for a `here document` is `<<` followed by a keyword tha
 the example below shows multiple strings being sent to the `sort` command.
 `EOF` is used to indicate when the input has ended.
 
-```
+```bash
 [linux_lab@localhost ~]$ sort <<EOF
 > dog
 > fish
@@ -21,9 +21,10 @@ rabbit
 turtle
 [linux_lab@localhost ~]$
 ```
+
 any keyword can be used to denote the end of the `heredoc` such as using the keyword `END`
 
-```
+```bash
 [linux_lab@localhost ~]$ cat <<END
 > hello
 > the end is after this line
@@ -33,27 +34,27 @@ the end is after this line
 [linux_lab@localhost ~]$ 
 ```
 
-
-
 ## Variable Expansion
 
-```
+```bash
 [linux_lab@localhost ~]$ cat <<EOF
 > Home: $HOME
 > EOF
 Home: /home/linux_lab
 ```
+
 here we can use $VARIABLE syntax to expand a variable or environment variable
 
-```
+```bash
 [linux_lab@localhost ~]$ cat <<'EOF'
 > Home: $HOME
 > EOF
 Home: $HOME
 ```
+
 if we quote the ending keyword like above, we cannot use variable expansion
 
-```
+```bash
 [linux_lab@localhost ~]$ cat <<EOF
 > Date: `date`
 > EOF
@@ -63,18 +64,19 @@ Date: Wed 13 May 08:54:13 BST 2026
 we can also use `` to run a command within the heredoc. using `date` will print out the current date and time
 another option is to use `$(command)` syntax to run a command
 
-```
+```bash
 [linux_lab@localhost ~]$ cat <<EOF
 > Uptime: $(uptime)
 > EOF
 Uptime:  08:54:46 up 2 days,  1:03,  2 users,  load average: 0.54, 0.48, 0.45
 ```
 
+
 ## Working with Scripts
 
 this shows an example of creating a config file for an application
 
-```
+```bash
 [root@localhost ~]# cat <<EOF > /etc/myapp.conf
 port=8080
 mode=production
@@ -87,9 +89,10 @@ EOF
 port=8080
 mode=production
 ```
+
 so this can be used within a shell script
 
-```
+```bash
 #!/bin/bash
 
 PORT=8080
@@ -102,9 +105,10 @@ mode=$MODE
 logfile=$LOGFILE
 EOF
 ```
+
 the following script will create a multi-line string and use `echo` to output the multi-line message to STDOUT
 
-```
+```bash
 #!/bin/bash
 
 read -r -d '' MESSAGE <<EOF
@@ -123,18 +127,19 @@ you could use `-d ':'` to read until the `:`
 
 this is a single line string only using `<<<`
 
-```
+```bash
 [linux_lab@localhost ~]$ cat <<< "hello"
 hello
 
 [linux_lab@localhost ~]$ cat <<< "single line string"
 single line string
 ```
+
 ## Tab Striping
 
 using `<<-EOF` tabs are removed, spaces are not removed. which are useful in scripts
 
-```
+```bash
 [linux_lab@localhost ~]$ ./remove_tab.sh 
 this is a tabbed line
 
@@ -146,8 +151,8 @@ cat <<-EOF
 EOF
 [linux_lab@localhost ~]$ 
 ```
-here we can see that the tabs at the beginning of the line have been removed
 
+here we can see that the tabs at the beginning of the line have been removed
 
 ## Cheat Sheet
 

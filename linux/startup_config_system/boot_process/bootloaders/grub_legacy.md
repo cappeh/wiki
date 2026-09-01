@@ -23,7 +23,7 @@ color white/blue yellow/blue
 
 typical menu options
 
-```
+```bash
 color           foreground/background colours to use in the boot menu. first pair are for normal menu entries, second pair is the colours for the selected menu entry
 default         the default menu option to select
 fallback        a secondary menu option if the default fails
@@ -34,13 +34,14 @@ timeout         the amount of time to wait to select a menu option before using 
 
 the OS definitions follow where each OS should have its own definition.
 
-```
+```bash
 title           first line for each boot definition (this appears in the boot menu)
 root            defines the disk and partition (where the GRUB "/boot" directory partition is on the system) - defined as (hddrive, partition)
 kernel          defines the kernel image stored in "/boot" to load
 initrd          defines the intial RAM disk file containing the drivers necessary for the kernel to interact with system hardware
 rootnoverify    defines non-linux boot partitions such as Windows
 ```
+
 (hd0, 0): this references the first partition on the first hard drive of the system
 (hd0, 1): references the second partition of the first hard drive on the system.
 
@@ -49,7 +50,7 @@ its located in "/boot" and usually called initrd.img-kversion (kversion is the k
 
 sample file:
 
-```
+```conf
 default 0
 timeout 10
 color white/blue yellow/blue
@@ -64,7 +65,6 @@ rootnoverify (hd0,0)
 ```
 
 the `z` in `vmlinuz` means that the kernel file is compressed using `bzImage` otherwise its `vmlinux`
-
 
 ## Install GRUB Legacy
 with a legacy configuration file, the program must also be installed in the MBR (Master Boot Record)
