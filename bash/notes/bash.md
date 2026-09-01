@@ -20,7 +20,6 @@ if we accidentally create a file called `lesson-34.txt` we can use the `mv` comm
 
 `mv lesson-34.txt lesson-3.txt`
 
-
 if we `mv` a file to an existing file such as `lesson-2.txt`, then `lesson-2.txt` will be overwritten
 if we try to do this on finder, it will block us, the terminal is very powerful
 
@@ -85,7 +84,7 @@ daverdy
 ```
 so here grep through each line and will print the lines that contain 'dave' somewhere in the text
 
-```
+```bash
 grep '^dave' /usr/share/dict/words
 daven
 davenport
@@ -128,18 +127,19 @@ we can use the `type` command to determine what type of program we have
 
 `type -a ls` will show if you have an alias set up, then will show if its builtin or external
 
-```
-󰀵 calupric in ~/learn_bash ❯ type ls
+```bash
+type ls
 ls is an alias for eza -lhbgum --icons=always --ignore-glob="$IGNORE_GLOBS"
 
-󰀵 calupric in ~/learn_bash ❯ type -a ls
+type -a ls
 ls is an alias for eza -lhbgum --icons=always --ignore-glob="$IGNORE_GLOBS"
 ls is /bin/ls
 ```
 
 when we man echo we dont get the correct man page because it will default to the /bin/echo program not the shell builtin function
-```
-󰀵 calupric in ~/learn_bash ❯ type -a echo
+
+```bash
+type -a echo
 echo is a shell builtin
 echo is /bin/echo
 ```
@@ -152,7 +152,7 @@ the `file` command will do its best to tell us what type of file something is. `
 
 `file /bin/rm` will return that it is a universal binary an executable program
 
-```
+```bash
 file /bin/rm
 /bin/rm: Mach-O universal binary with 2 architectures: [x86_64:Mach-O 64-bit executable x86_64] [arm64e:Mach-O 64-bit executable arm64e]
 /bin/rm (for architecture x86_64):      Mach-O 64-bit executable x86_64
@@ -163,12 +163,12 @@ PATH is where bash or other shells will look for executable programs such as `us
 because path is a variable we need to use `$PATH` to expand the variable and print its contents to screen with the echo command
 we can also pipe it to the `tr` command to show each path on a new line as they are seperated by ':'
 
-```
+```bash
 echo $PATH
 /opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin
 ```
 
-```
+```bash
 echo $PATH | tr : '\n'
 /opt/homebrew/bin
 /opt/homebrew/sbin
@@ -190,7 +190,7 @@ $PATH, $USER, $HOSTNAME, $SHELL, $MACHTYPE
 we could also create a new variable, that will live for as long as the shell session continues to exist
 `name=calum` which we can display with `echo $name`
 
-```
+```bash
 foo='hello    world'
 echo $foo
 hello world
@@ -206,7 +206,7 @@ when using double quotes around the variable, it will diplay the variable as int
 
 we can also set a variable to be the outcome of a command such as `uname -a`
 
-```
+```bash
 thing=`uname -a`
 
 echo "$thing"
@@ -216,7 +216,7 @@ Darwin CALUPRIC-M-9JJX 25.5.0 Darwin Kernel Version 25.5.0: Tue Jun  9 22:28:34 
 using the `` is considered legacy and replaced with:
 `$(..)` for example 
 
-```
+```bash
 thing=$(uname -a)
 ```
 
@@ -243,20 +243,22 @@ when we have the **shebang** in the script, we dont need the `.sh` extension bec
 using `.sh` was used for POSIX scripts that are not as feature packed as **bash** which could cause issues. We could also add `.bash` but this is not necessary
 
 before adding the **shebang**
-```
+
+```bash
 file script.sh
 script.sh: ASCII text
 ```
 
 after adding the **shebang**
-```
+
+```bash
 file script.sh
 script.sh: Bourne-Again shell script text executable, ASCII text
 ```
 
 when we remove the `.sh` extension with `mv`: `mv script.sh script` the system still knows this is bash script because of the **shebang**
 
-```
+```bash
 file script
 script: Bourne-Again shell script text executable, ASCII text
 ```
@@ -266,13 +268,13 @@ a script is just a series of bash commands that are run
 `bash -n` is a syntax checker without executing the script. Empty output means that it is successful and there are no errors
 if we use `echo $?` we can see that exit code of the last command that was run. 0 is success 1 and above means there was an error
 
-```
+```bash
 for thing in foo bar baz bat; do
     echo "thing is $thing"
 end
 ```
 
-```
+```bash
 bash -n loop
 loop: line 25: syntax error: unexpected end of file
 ```

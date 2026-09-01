@@ -4,14 +4,15 @@ we use the `-p` option to provide a prompt to the user followed by a name for th
 
 `read -p 'Enter your name: ' name`
 
-```
+```bash
 ./hello_input_name
 Enter your name: Calum
 Hello Calum
 ```
+
 we can also pipe the standard input if you know what is being asked
 
-```
+```bash
 echo Calum | ./hello_input_name
 Hello Calum
 ```
@@ -23,7 +24,7 @@ the `yes` program is also useful if you want to answer y to a bunch of questions
 
 we could also do this
 
-```
+```bash
 name=$1
 echo "hello $name"
 ```
@@ -34,18 +35,21 @@ $1 is the first argument, $2 is the second, $3 is the third and so on
 $0 is the name/path used to invoke the script
 
 we can loop through arguments like this
-```
+
+```bash
 for thing in "$1" "$2" "$3"; do
   echo "thing is $thing"
 done
 ```
+
 this will cause issues if there are more than 3 arguments given as a 4th will be lost
 
-```
+```bash
 for thing in "$@"; do
   echo "thing is $thing"
 done
 ```
+
 the `$@` expands to be an array of all the arguments given when executing the script
 
 ## Functions
@@ -55,14 +59,16 @@ and run `$?` to check the return code
 
 in this example we can call a script from another script. So this will call the ./hello script with each argument we give
 this runs hello from the current directory './'
-```
+
+```bash
 for name in "$@"; do
   ./hello $name
 done
 ```
 
 this is a function example
-```
+
+```bash
 greet() {
   local name=$1
   echo "hello $name"
@@ -82,7 +88,7 @@ functions emit data and print to stdout which means we can store the output in a
 
 the following snippet will print 'a and b are the same' to standard output
 
-```
+```bash
 a=2
 b=2
 
@@ -94,7 +100,7 @@ fi
 we used '' (single quotes) to echo the text, something we dont have to do. It is useful if there are multiple spaces / whitespace in the text and you want to maintain the spaces
 "" (double quotes) are useful if doing variable expansion for example "$a and $b are the same". This would print `2 and 2 are the same`
 
-```
+```bash
 c=2
 d=3
 
@@ -105,7 +111,7 @@ fi
 
 in this second example we are checking whether c is not equal to d. If its not equal, print `c and d are NOT the same`
 
-```
+```bash
 if [[ -f file.txt ]]; then
   echo 'file.txt exists and is a file'
 fi
@@ -121,7 +127,7 @@ with zsh, we pipe to less, so we can apply a filter in this example 'CONDITIONAL
 
 we could put anything after the if command. so we could do
 
-```
+```bash
 if ls; then
   echo 'the ls command worked'
 fi
@@ -129,19 +135,20 @@ fi
 
 we can also use a `while` loop checking whether a files exists and once its removed, the `while` loop ends
 
-```
+```bash
 while [[ -f file.txt ]]; do
   echo 'file.txt exists and is a file'
   sleep 1
 done
 ```
+
 the sleep function/program will pause for n amount of time before checking the while condition
 this will continually print 'file.txt exists and is a file' until the file is deleted with `rm`
 
 `until` is the opposite of while
 so if we do `until [[ -f file.txt ]]`, this means until the file exists echo a message
 
-```
+```bash
 until [[ -f file.txt ]]; do
   echo 'file.txt does NOT exist'
 done
@@ -153,7 +160,7 @@ we could also just negate a while statement `while ! [[ -f file.txt ]]`
 
 we could put something like
 
-```
+```bash
 if apt-get update; then
   echo 'update complete'
 else
@@ -171,17 +178,18 @@ generally use `[[..]]`
 
 we can use `{1..5}` or `{a..f}` syntax within a for loop to exand them to 1 through 5 or a through f
 
-```
+```bash
 for thing in {1..5}; do
   echo "thing is $thing"
 done
 ```
+
 this will print `thing is 1`, `thing is 2` etc on a new line until `thing is 5`
 
 there is also a c style for loop for using arithmetic using `((..))`, using parenteses is for mathmatical operations
 with this syntax we co not need to expand variables because math syntax is aware of variables
 
-```
+```bash
 max=5
 for ((i=0; i<max; i++)); do
   echo "thing is $i"
@@ -196,7 +204,7 @@ when ending the statement with `;&` this means **always fallthrough**. after a m
 when ending with `;;&` it will check all statements for a match. If there is a match execute the command in the statement. This would also match on the default `*)`
 we can use a wildcard `*)`
 
-```
+```bash
 s=$1
 
 case "$s" in
@@ -209,7 +217,7 @@ case "$s" in
 esac
 ```
 
-```
+```bash
 for name in "$@"; do
   case "$name" in
     d*) hello "$name";;
@@ -232,10 +240,11 @@ we can also use negative numbers `[-1]` will echo the last element
 
 we can put the index we want in a variable
 
-```
+```bash
 idx=2
 echo "${array[$idx]}"
 ```
+
 the dollar sign is optional when indexing with a variable `[idx]` is perfectly valid in the above code
 
 we can use the following to print all the items in an array:
@@ -243,11 +252,13 @@ we can use the following to print all the items in an array:
 `echo "@: ${array[@]}"`
 
 if we loop over the items in the array:
-```
+
+```bash
 for item in "${array[*]}"; do
   echo "item is: $item"
 done
 ```
+
 this will print one line: `item is: foo bar baz`
 `*` is when we are stringifying the elements in an array (when we want a string at the end of it)
 
@@ -263,10 +274,11 @@ we can also add/extend to the array like this: `second_array+=(bat cat ls)`
 
 in the terminal we can do the following which pretty prints the array. It provides information about the type of variable and its contents
 
-```
+```bash
 array=(foo bar baz)
 declare -p array
 ```
+
 this will print `declare -a array=([0]="foo" [1]="bar" [2]="baz")`
 it shows how the array was actually created, which is also a valid way of creating an array in a script or the shell
 we can also do `declare -a array=([45]="foo")` where we can retrieve the array with `echo "${array[45]}"`
@@ -276,7 +288,7 @@ this would show you the length of a specific element `echo "${array[1]}"`
 
 so we can also get the length of other variables with this method
 
-```
+```bash
 var="hello world"
 echo "${#var}"
 ```
@@ -295,13 +307,14 @@ if ! declare -A arr; then
 fi
 ```
 
-```
+```bash
 declare -A arr
 
 arr[foo]=1
 arr[bar]=2
 arr[baz]=3
 ```
+
 we can echo these like `echo "${arr[foo]}"`
 
 we can also use `"${arr[*]}"` or `"${arr[@]}"` which will just print the **values**
@@ -326,6 +339,7 @@ by default this is set to "Space, New Line Character, Tab" (whitespace character
 array=(foo bar baz)
 echo "array is: ${array[*]}"
 ```
+
 in the above, the array is stringified using the first variable of the IFS `space`
 
 so it prints `array is foo bar baz`
