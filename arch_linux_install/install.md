@@ -23,6 +23,7 @@ Set a root password and identify your IP address to SSH into the machine:
 
 ```bash
 passwd
+# Enter new root user password
 ip a
 # From another machine:
 ssh root@<ip_address>
