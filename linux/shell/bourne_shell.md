@@ -24,3 +24,13 @@ cat /etc/passwd
 a command will usually start with a program to run `cat` which could be followed by one or more arguments which tells the program what to 
 operate on and how to do so `/etc/passwd`
 many arguments are options that modify the behaviour of the command and typically begin with a `-` (dash)
+
+## Change Shell
+
+```bash
+# check which shells are available
+cat /etc/shells
+
+# change the shell
+chsh -s /bin/zsh
+```
